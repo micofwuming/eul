@@ -22,7 +22,7 @@ class ComponentsStore<Component: JSONCodabble & Equatable>: ObservableObject {
     private var onDidChange: (() -> Void)?
 
     var totalCount: Int {
-        allComponents.count
+        activeComponents.count + availableComponents.count
     }
 
     var json: JSON {

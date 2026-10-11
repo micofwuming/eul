@@ -14,7 +14,7 @@ extension Preference {
         @EnvironmentObject var preference: PreferenceStore
         @EnvironmentObject var componentsStore: ComponentsStore<EulMenuComponent>
         @State var dragging: EulMenuComponent?
-        @State var frames: [CGRect] = .init(repeating: .zero, count: EulMenuComponent.allCases.count)
+        @State var frames: [CGRect] = .init(repeating: .zero, count: SharedStore.menuComponents.totalCount)
         @GestureState var offsetHeight: CGFloat = 0
 
         func updateFrame(geometry: GeometryProxy, index: Int) -> some View {

@@ -30,6 +30,7 @@ func shellData(_ args: [String]) -> Data? {
         try task.run()
     } catch {
         print("⚠️ shell executed with error", error)
+        return nil
     }
 
     let data = pipe.fileHandleForReading.readDataToEndOfFile()

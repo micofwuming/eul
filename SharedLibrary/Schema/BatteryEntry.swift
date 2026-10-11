@@ -42,7 +42,7 @@ public struct BatteryEntry: SharedWidgetEntry {
 
     public static let containerKey = "BatteryEntry"
     public static let kind = "BatteryWidget"
-    public static let sample = BatteryEntry(charge: 1, capacity: 100, maxCapacity: 100, designCapacity: 100)
+    public static var sample: BatteryEntry { BatteryEntry(charge: 1, capacity: 100, maxCapacity: 100, designCapacity: 100) }
 
     public var date = Date()
     public var outdated = false

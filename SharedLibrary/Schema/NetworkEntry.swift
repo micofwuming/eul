@@ -23,7 +23,7 @@ public struct NetworkEntry: SharedWidgetEntry {
 
     public static let containerKey = "NetworkEntry"
     public static let kind = "NetworkWidget"
-    public static let sample = NetworkEntry(inSpeedInByte: 20480, outSpeedInByte: 10240)
+    public static var sample: NetworkEntry { NetworkEntry(inSpeedInByte: 20480, outSpeedInByte: 10240) }
 
     public var date = Date()
     public var outdated = false

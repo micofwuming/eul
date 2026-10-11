@@ -25,7 +25,7 @@ public struct MemoryEntry: SharedWidgetEntry {
 
     public static let containerKey = "MemoryEntry"
     public static let kind = "MemoryWidget"
-    public static let sample = MemoryEntry(used: 10, total: 18, temp: 50)
+    public static var sample: MemoryEntry { MemoryEntry(used: 10, total: 18, temp: 50) }
 
     public var date = Date()
     public var outdated = false

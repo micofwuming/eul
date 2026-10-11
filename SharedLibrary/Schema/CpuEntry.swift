@@ -26,7 +26,7 @@ public struct CpuEntry: SharedWidgetEntry {
 
     public static let containerKey = "CpuEntry"
     public static let kind = "CpuWidget"
-    public static let sample = CpuEntry(temp: 50, usageSystem: 10, usageUser: 20, usageNice: 30)
+    public static var sample: CpuEntry { CpuEntry(temp: 50, usageSystem: 10, usageUser: 20, usageNice: 30) }
 
     public var date = Date()
     public var outdated = false

@@ -71,10 +71,16 @@ struct CpuWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            CpuWidgetEntryView(entry: entry)
+            if #available(macOSApplicationExtension 14, *) {
+                CpuWidgetEntryView(entry: entry)
+                    .containerBackground(.background, for: .widget)
+            } else {
+                CpuWidgetEntryView(entry: entry)
+            }
         }
         .configurationDisplayName("widget.cpu.title".localized())
         .description("widget.cpu.description".localized())
         .supportedFamilies([.systemSmall])
+        .contentMarginsDisabled()
     }
 }

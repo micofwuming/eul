@@ -64,10 +64,16 @@ struct NetworkWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            NetworkWidgetEntryView(entry: entry)
+            if #available(macOSApplicationExtension 14, *) {
+                NetworkWidgetEntryView(entry: entry)
+                    .containerBackground(.background, for: .widget)
+            } else {
+                NetworkWidgetEntryView(entry: entry)
+            }
         }
         .configurationDisplayName("widget.network.title".localized())
         .description("widget.network.description".localized())
         .supportedFamilies([.systemSmall])
+        .contentMarginsDisabled()
     }
 }

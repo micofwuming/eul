@@ -53,8 +53,12 @@ class TopStore: ObservableObject {
                 let runningApps = NSWorkspace.shared.runningApplications
                 let result: [RamUsage] = ((separatorIndex + 2)..<rows.count).compactMap { index in
                     let row = rows[index].split(separator: " ").map { String($0) }
-                    guard row.count >= 2, let pid = Int(row[0]), let rawRamString = row.last, let ram = Double(rawRamString.filter("0123456789.".contains)), pid != 0 else {
+                    guard row.count >= 2, let pid = Int(row[0]), let rawRamString = row.last, var ram = Double(rawRamString.filter("0123456789.".contains)), pid != 0 else {
                         return nil
+                    }
+
+                    if rawRamString.contains("G") {
+                        ram *= 1024
                     }
 
                     let usage = 100 * (ram / self.memorySizeMB)

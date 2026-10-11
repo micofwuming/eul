@@ -37,6 +37,8 @@ class NetworkTopStore: ObservableObject {
     private var lastTimestamp: TimeInterval = Date().timeIntervalSince1970
     private var lastInBytes: [Int: Double] = [:]
     private var lastOutBytes: [Int: Double] = [:]
+    private var processesHaveBeenSet = true
+    private let queue = DispatchQueue(label: "NetworkTopStore")
     @ObservedObject var preferenceStore = SharedStore.preference
     @Published var processes: [ProcessNetworkUsage] = []
 
@@ -76,7 +78,7 @@ class NetworkTopStore: ObservableObject {
         lastTimestamp = time
 
         Print("network top is updating")
-        processes = rows.dropFirst().compactMap { row in
+        let processes: [ProcessNetworkUsage] = rows.dropFirst().compactMap { row in
             let cols = row.split(separator: ",").map { String($0) }
 
             guard
@@ -126,6 +128,10 @@ class NetworkTopStore: ObservableObject {
             )
         }
         .sorted(by: { $0.value.totalSpeedInByte > $1.value.totalSpeedInByte })
+
+        DispatchQueue.main.async {
+            self.processes = processes
+        }
     }
 
     func update(shouldStart: Bool) {
@@ -140,13 +146,27 @@ class NetworkTopStore: ObservableObject {
             return
         }
 
-        lastInBytes.removeAll()
-        lastOutBytes.removeAll()
-        lastTimestamp = Date().timeIntervalSince1970
+        queue.async { [self] in
+            lastInBytes.removeAll()
+            lastOutBytes.removeAll()
+            lastTimestamp = Date().timeIntervalSince1970
+        }
         processes = []
 
         let timer = Timer.scheduledTimer(withTimeInterval: Double(interval), repeats: true) { _ in
-            self.run()
+            guard self.processesHaveBeenSet else {
+                return
+            }
+
+            self.processesHaveBeenSet = false
+
+            self.queue.async {
+                self.run()
+
+                DispatchQueue.main.async {
+                    self.processesHaveBeenSet = true
+                }
+            }
         }
         RunLoop.main.add(timer, forMode: .common)
         self.timer = timer

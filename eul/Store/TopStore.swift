@@ -61,7 +61,7 @@ class TopStore: ObservableObject {
 
                     return RamUsage(
                         pid: pid,
-                        command: Info.getProcessCommand(pid: pid)!,
+                        command: Info.getProcessCommand(pid: pid) ?? row[1],
                         value: usage,
                         usageAmount: ram,
                         runningApp: runningApps.first(where: { $0.processIdentifier == pid })

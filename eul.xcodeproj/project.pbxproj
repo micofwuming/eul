@@ -2252,10 +2252,10 @@
 		};
 		6CF28D0725168B8200EBE9CB /* XCRemoteSwiftPackageReference "SystemKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gao-sun/SystemKit";
+			repositoryURL = "https://github.com/micofwuming/SystemKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.12;
+				minimumVersion = 0.0.13;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

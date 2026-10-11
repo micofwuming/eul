@@ -30,11 +30,11 @@
       },
       {
         "package": "SystemKit",
-        "repositoryURL": "https://github.com/gao-sun/SystemKit",
+        "repositoryURL": "https://github.com/micofwuming/SystemKit",
         "state": {
           "branch": null,
-          "revision": "60fbc2e3ccb54850046703d4e32ab6ecccbaf046",
-          "version": "0.0.12"
+          "revision": "6c724efc2090442e3d2daff0fc918c9ca25e175c",
+          "version": "0.0.13"
         }
       }
     ]

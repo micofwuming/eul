@@ -156,7 +156,7 @@ extension BluetoothStore: CBPeripheralDelegate {
             return
         }
 
-        guard let batteryLevel = characteristic.value?[0] else {
+        guard let batteryLevel = characteristic.value?.first else {
             return
         }
 

@@ -4,13 +4,14 @@
 
 # eul
 
+A fork of [gao-sun/eul](https://github.com/gao-sun/eul) with bug fixes for newer macOS and Apple Silicon.
+
 ![Preview](https://user-images.githubusercontent.com/14722250/105626766-f718ab00-5e6c-11eb-9761-661ff85c8faf.jpg)
 
 ## Highlights
 
 - Dark Mode compatible
 - Big Sur widgets out of the box
-- Bluetooth battery level
 - Written in SwiftUI (as much as possible)
 
 ## OS Requirement
@@ -23,20 +24,13 @@ macOS 12.0 minimum
 
 Download the [latest release](https://github.com/micofwuming/eul/releases/latest/download/eul.app.zip) directly and drag `.app` file into your `Application` folder.
 
-### Homebrew Cask
+The app is not notarized. Run this once before opening it:
 
 ```bash
-brew install --cask eul
+xattr -dr com.apple.quarantine /Applications/eul.app
 ```
 
-### App Store
-
-Search `eul` or [click here](https://apps.apple.com/us/app/eul/id1537133867) to view in App Store.
-
-Note:
-
-1. Some features are disabled due to the removal of all SMC calls.
-2. The version is out-dated.
+If you are switching from the original eul with `Launch at login` enabled, toggle it off and on twice in Preferences.
 
 ### Release Notes
 
@@ -108,7 +102,7 @@ let languages = [
   "Deutsch", "Русский", "Español",
   "Português", "Монгол", "한국어",
   "日本語", "Français", "Українська",
-  "Svenska", "Čeština", "Italiano",
+  "Čeština", "Italiano",
   "繁體中文", "မြန်မာဘာသာ", "Magyar",
   "ไทย", "Türkçe"
 ];

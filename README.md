@@ -15,7 +15,7 @@
 
 ## OS Requirement
 
-macOS 10.15 minimum for SwiftUI support
+macOS 12.0 minimum
 
 ## Installation
 

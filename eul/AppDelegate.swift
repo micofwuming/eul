@@ -15,6 +15,7 @@ import SwiftUI
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var isSleeping = false
+    private var checkUpdateWorkItem: DispatchWorkItem?
     private var updateMethodCancellable: AnyCancellable?
     private var appearanceCancellable: AnyCancellable?
 
@@ -55,7 +56,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             print("🤩 woke up")
             self.wakeUp()
         }
-        updateMethodCancellable = preferenceStore.$upgradeMethod.sink { _ in
+        updateMethodCancellable = preferenceStore.$upgradeMethod.dropFirst().sink { _ in
             DispatchQueue.main.async {
                 self.checkUpdateRepeatedly()
             }
@@ -137,13 +138,17 @@ extension AppDelegate {
     }
 
     func checkUpdateRepeatedly() {
+        checkUpdateWorkItem?.cancel()
+
         guard !isSleeping, preferenceStore.upgradeMethod != .none else {
             return
         }
 
         preferenceStore.checkUpdate()
-        DispatchQueue.main.asyncAfter(deadline: .now() + Double(60 * 60)) { [self] in
+        let workItem = DispatchWorkItem { [self] in
             checkUpdateRepeatedly()
         }
+        checkUpdateWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + Double(60 * 60), execute: workItem)
     }
 }

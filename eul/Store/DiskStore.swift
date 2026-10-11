@@ -85,6 +85,7 @@ class DiskStore: ObservableObject, Refreshable {
             let url = URL(fileURLWithPath: path)
 
             guard
+                (try? url.resourceValues(forKeys: [.volumeIsBrowsableKey]))?.volumeIsBrowsable != false,
                 let attributes = try? FileManager.default.attributesOfFileSystem(forPath: path),
                 let size = attributes[FileAttributeKey.systemSize] as? UInt64,
                 let freeSize = attributes[FileAttributeKey.systemFreeSize] as? UInt64

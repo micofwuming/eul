@@ -167,12 +167,26 @@ enum Info {
         } ?? []
     }
 
+    static func getDefaultInterface() -> String? {
+        guard
+            let output = shell("route -n get default"),
+            let matched = output.firstMatch("interface: (\\S+)")?.range(at: 1),
+            let range = Range(matched, in: output)
+        else {
+            return nil
+        }
+
+        return String(output[range])
+    }
+
     static func getNetworkUsage(forDevice: String?, _ onData: @escaping (NetworkUsage, [NetworkPort], NetworkPort?) -> Void) {
         // TO-DO: use Combine
         shellAsync("networksetup -listnetworkserviceorder") {
             let services = $0?.split(separator: "\n").map(String.init).compactMap(Info.findPort) ?? []
             let activeInterfaces = Info.getActiveInterfaces()
-            let currentActivePort = services.first(where: { activeInterfaces.contains($0.device) })
+            let defaultInterface = Info.getDefaultInterface()
+            let currentActivePort = services.first(where: { $0.device == defaultInterface })
+                ?? services.first(where: { activeInterfaces.contains($0.device) })
 
             Print("network services order", services)
             Print("network active interfaces", activeInterfaces)
